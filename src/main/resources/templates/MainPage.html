@@ -1,0 +1,122 @@
+<!DOCTYPE html>
+<html xmlns="http://www.w3.org/1999/xhtml" xmlns:th="https://www.thymeleaf.org">
+<head>
+    <title>Welcome to My App</title>
+    <style>
+        body {
+            font-family: Arial, sans-serif;
+            background-color: #f8f9fa;
+            margin: 0;
+            padding: 0;
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            height: 100vh;
+        }
+        .container {
+            text-align: center;
+            padding: 20px;
+            border-radius: 8px;
+            background-color: #fff;
+            box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
+            max-width: 400px;
+            width: 100%;
+             position: relative; /* Make the container a positioning context */
+        }
+        h1 {
+            color: #007bff;
+            font-size: 32px;
+            margin-bottom: 20px;
+        }
+        p {
+            color: #333;
+            font-size: 16px;
+            margin-bottom: 20px;
+        }
+        .login-link {
+            color: #007bff;
+            text-decoration: none;
+            font-size: 16px;
+        }
+        .login-link:hover {
+            text-decoration: underline;
+        }
+    </style>
+    
+    
+    <style>
+    /* CSS Code */
+  .grid-container {
+    display: grid;
+    grid-template-columns: repeat(3, 15px);
+    grid-template-rows: repeat(3, 15px);
+    gap: 1px;
+    position: absolute; /* Position the grid container absolutely */
+    bottom: 0; /* Align to the bottom */
+    right: 0; /* Align to the right */
+}
+
+    .cell {
+        width: 15px;
+        height: 15px;
+        background-color: var(--cell-color);
+        animation: cellAnimation 1s ease-in-out infinite;
+    }
+
+    /* Define animation */
+    @keyframes cellAnimation {
+        from { opacity: 0; }
+        to { opacity: 1; }
+    }
+
+    /* Define delays for different cells */
+    .cell.d-1 { animation-delay: 100ms; }
+    .cell.d-2 { animation-delay: 200ms; }
+    .cell.d-3 { animation-delay: 300ms; }
+    .cell.d-4 { animation-delay: 400ms; }
+    .cell.d-5 { animation-delay: 500ms; }
+    .cell.d-6 { animation-delay: 600ms; }
+    .cell.d-7 { animation-delay: 700ms; }
+    .cell.d-8 { animation-delay: 800ms; }
+    .cell.d-9 { animation-delay: 900ms; }
+
+    /* Define colors for different cells */
+    .cell:nth-child(1) { --cell-color: #6eff9c; } /* Light Green */
+    .cell:nth-child(2) { --cell-color: #5dfc8d; } /* Green */
+    .cell:nth-child(3) { --cell-color: #4aec7e; } /* Dark Green */
+    .cell:nth-child(4) { --cell-color: #3bdb6f; } /* Forest Green */
+    .cell:nth-child(5) { --cell-color: #2ac960; } /* Spring Green */
+    .cell:nth-child(6) { --cell-color: #19b751; } /* Lime Green */
+    .cell:nth-child(7) { --cell-color: #08a442; } /* Emerald Green */
+    .cell:nth-child(8) { --cell-color: #009333; } /* Sea Green */
+    .cell:nth-child(9) { --cell-color: #007b24; } /* Dark Green */
+</style>
+</head>
+<body>
+    <div class="container">
+        <h1>Welcome to My App</h1>
+        
+         
+        <p>This is a description of what the app does.</p>
+        <p>Please <a th:href="@{/loginMenu}" class="login-link">log in</a> to continue.</p>
+        
+       
+	<div class="grid-container">
+        <div class="cell d-1"></div>
+        <div class="cell d-2"></div>
+        <div class="cell d-3"></div>
+        <div class="cell d-4"></div>
+        <div class="cell d-5"></div>
+        <div class="cell d-6"></div>
+        <div class="cell d-7"></div>
+        <div class="cell d-8"></div>
+        <div class="cell d-9"></div>
+    	</div>
+        
+        
+    </div>
+    
+    <br>
+    
+     
+</html>

@@ -1,0 +1,125 @@
+<!DOCTYPE html>
+<html xmlns="http://www.w3.org/1999/xhtml" xmlns:th="https://www.thymeleaf.org">
+<head>
+    <title>Please Log In</title>
+    <!-- Bootstrap CSS -->
+    <link href="https://maxcdn.bootstrapcdn.com/bootstrap/4.5.2/css/bootstrap.min.css" rel="stylesheet">
+    <style>
+        /* Add your custom CSS styles here */
+        /* For example: */
+        body {
+            background-color: #f8f9fa;
+        }
+        .login-container {
+            max-width: 400px;
+            margin: 0 auto;
+            margin-top: 50px;
+            padding: 20px;
+            background-color: #fff;
+            border-radius: 8px;
+            box-shadow: 0 4px 8px rgba(0,0,0,0.1);
+        }
+        .login-container h1 {
+            font-size: 24px;
+            margin-bottom: 20px;
+            text-align: center;
+        }
+        .login-container form input[type="text"],
+        .login-container form input[type="password"] {
+            width: 100%;
+            padding: 10px;
+            margin-bottom: 20px;
+            border: 1px solid #ced4da;
+            border-radius: 4px;
+            box-sizing: border-box;
+        }
+        .login-container form input[type="submit"] {
+            width: 100%;
+            padding: 10px;
+            border: none;
+            border-radius: 4px;
+            background-color: #007bff;
+            color: #fff;
+            font-size: 16px;
+            cursor: pointer;
+        }
+        .login-container form input[type="submit"]:hover {
+            background-color: #0056b3;
+        }
+        .error-message {
+            color: red;
+            margin-top: 10px;
+        }
+        .register-link {
+            text-align: center;
+            margin-top: 10px;
+        }	
+         .btn-login {
+            width: 100%; /* Make the button width 100% of its parent */
+        }
+    </style>
+</head>
+<body>
+<div class="container">
+    <div class="login-container">
+        <h1>Please Log In</h1>
+        <div th:if="${param.error}" class="error-message">
+            Invalid username and password.
+        </div>
+        <div th:if="${param.logout}" class="error-message">
+            You have been logged out.
+        </div>
+       
+            <div class="form-group">
+                <input type="text" id="userId" name="username" class="form-control" placeholder="Username"/>
+            </div>
+            <div class="form-group">
+                <input type="password" id="userPw" name="password" class="form-control" placeholder="Password"/>
+            </div>
+            
+            <button id="loginBtn" onclick="loginCheck()" class="btn btn-primary btn-login">Log in</button>
+	
+       			
+        <div class="register-link">
+            <a href="/registerMenu">Register</a>
+        </div>
+    </div>
+</div>
+
+<script>
+function loginCheck() {
+    let userId = document.getElementById('userId').value;
+    let userPw = document.getElementById('userPw').value;
+
+    const data = {
+        userId: userId,
+        userPw: userPw,
+    };
+
+    $.ajax({
+        type: "POST",
+        url: "/loginCheck",
+        data: JSON.stringify(data),
+        contentType: "application/json",
+        success: function (response) {
+            if (response == 1) {
+                window.location.href = "/normalUser/afterLogin"; // Ensure this matches your secured URL
+            } else {
+                alert("회원정보가없습니다");
+            }
+        },
+        error: function (xhr, status, error) {
+            console.log("URL sent:", this.url);
+        }
+    });
+}
+
+
+</script>
+
+<!-- Bootstrap JS (Optional) -->
+<script src="https://ajax.googleapis.com/ajax/libs/jquery/3.5.1/jquery.min.js"></script>
+<script src="https://cdnjs.cloudflare.com/ajax/libs/popper.js/1.16.0/umd/popper.min.js"></script>
+<script src="https://maxcdn.bootstrapcdn.com/bootstrap/4.5.2/js/bootstrap.min.js"></script>
+</body>
+</html>

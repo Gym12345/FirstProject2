@@ -1,0 +1,53 @@
+plugins {
+	id 'java'
+	id 'org.springframework.boot' version '3.2.5'
+	id 'io.spring.dependency-management' version '1.1.4'
+}
+
+group = 'com.GymCompany'
+version = '0.0.1-SNAPSHOT'
+
+java {
+	sourceCompatibility = '17'
+}
+
+repositories {
+	mavenCentral()
+}
+
+dependencies {
+	
+	//implementation 'org.mybatis.spring.boot:mybatis-spring-boot-starter:3.0.3'
+	implementation 'org.springframework.boot:spring-boot-starter-web'
+    implementation 'org.springframework.boot:spring-boot-starter-data-jpa'
+    implementation 'org.springframework.boot:spring-boot-starter-security'
+    //implementation 'org.springframework.security:spring-security-test'
+    implementation 'org.springframework.boot:spring-boot-starter-thymeleaf' // If you're using Thymeleaf for HTML rendering
+	implementation 'javax.validation:validation-api:2.0.1.Final' // or latest version
+	// https://mvnrepository.com/artifact/org.springframework/spring-test
+	implementation group: 'io.jsonwebtoken', name: 'jjwt-api', version: '0.11.5'
+    runtimeOnly group: 'io.jsonwebtoken', name: 'jjwt-impl', version: '0.11.5'
+    runtimeOnly group: 'io.jsonwebtoken', name: 'jjwt-jackson', version: '0.11.5'
+	
+	testImplementation group: 'org.springframework', name: 'spring-test', version: '6.1.6'
+	
+	implementation 'org.springframework.security:spring-security-crypto' // Bcrypt hashing library
+	
+	implementation 'com.oracle.database.jdbc:ojdbc11:21.1.0.0'
+	
+	developmentOnly 'org.springframework.boot:spring-boot-devtools'
+	
+	
+	testImplementation group: 'ch.qos.logback', name: 'logback-classic', version: '1.4.14'
+	
+	
+	testImplementation 'org.springframework.boot:spring-boot-starter-test'
+	testImplementation 'org.mybatis.spring.boot:mybatis-spring-boot-starter-test:3.0.3'
+
+	implementation group: 'org.apache.tomcat.embed', name: 'tomcat-embed-jasper', version: '11.0.0-M16'
+	
+}
+
+tasks.named('test') {
+	useJUnitPlatform()
+}

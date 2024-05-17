@@ -1,0 +1,184 @@
+<!DOCTYPE html>
+<html xmlns="http://www.w3.org/1999/xhtml" xmlns:th="https://www.thymeleaf.org">
+
+<head>
+    <title>User Registration</title>
+    <link href="https://stackpath.bootstrapcdn.com/bootstrap/4.5.2/css/bootstrap.min.css" rel="stylesheet">
+
+
+    <style>
+        .form-container {
+            max-width: 400px;
+            margin: 0 auto;
+            padding: 20px;
+            border: 1px solid #ccc;
+            border-radius: 5px;
+            background-color: #f9f9f9;
+            margin-top: 50px;
+        }
+    </style>
+
+    <style>
+        /* Style for the tooltip */
+        .tooltip {
+            position: relative;
+            display: inline-block;
+            border-bottom: 1px dotted black; /* If you want dots under the hoverable text */
+        }
+
+        /* Style for the tooltip text */
+        .tooltip .tooltiptext {
+            visibility: hidden;
+            width: 120px;
+            background-color: #555;
+            color: #fff;
+            text-align: center;
+            border-radius: 6px;
+            padding: 5px;
+            position: absolute;
+            z-index: 1;
+            bottom: 125%;
+            left: 50%;
+            margin-left: -60px;
+            opacity: 0;
+            transition: opacity 0.3s;
+        }
+
+        /* Show the tooltip text when you hover over the tooltip container */
+        .tooltip:hover .tooltiptext {
+            visibility: visible;
+            opacity: 1;
+        }
+    </style>
+
+</head>
+
+<body>
+    <div class="container">
+        <div class="form-container">
+            <h2 class="text-center">Register Form</h2>
+
+
+            <div class="form-group">
+                <label for="userId">ID:</label>
+                <input type="text" id="userId" name="userId" class="form-control" required>
+
+                <button id="checkRedundancy" th:onclick="rddCheck()" class="btn btn-danger">중복체크</button> <a id="checkMark" hidden="true">&#10004;</a>
+                <a id="xMark">&#10060;</a>
+
+            </div>
+
+
+	
+            <div class="form-group">
+                <label for="userPw">PW:</label>
+                <input type="password" id="userPw" name="userPw" class="form-control" required>
+            </div>
+            <div class="form-group">
+                <label for="userName">User Name:</label>
+                <input type="text" id="userName" name="userName" class="form-control" required>
+            </div>
+
+            <!-- Adding hover effect to the Sign Up button -->
+            
+           
+                <button id="signupButton" th:onclick="registerCheck()" class="btn btn-success btn-block" disabled="true" >Sign Up</button>
+               	
+            <a href="loginMenu" class="mt-3 d-block text-center">Go back</a>
+        
+    </div>
+</div>
+    <script>
+        function rddCheck() {
+            let data = document.getElementById('userId').value;
+
+            $.ajax({
+                type: "POST",
+                url: "/rddCheck",
+                data: JSON.stringify(data),
+                contentType: "application/json",
+                success: function (response) {
+
+                    if (data == "") {
+                        alert("아이디를 입력해주세요");
+                        return;
+                    }
+                    if (response == 0) {
+                        alert("적합한 아이디입니다");
+                        document.getElementById("userId").readOnly = true;
+                        document.getElementById("checkRedundancy").disabled = true;
+                        document.getElementById("signupButton").disabled = false;
+                        document.getElementById("checkMark").hidden = false;
+                        document.getElementById("xMark").hidden = true;
+                    } else {
+                        alert("중복된 아이디가 존재합니다.");
+                    }
+
+
+
+
+                },
+                error: function (xhr, status, error) {
+
+                    console.log("URL sent:", this.url);
+                }
+            });
+        }
+
+        function registerCheck() {
+
+            let userId = document.getElementById("userId").value;
+            let userPw = document.getElementById("userPw").value;
+            let userName = document.getElementById("userName").value;
+            console.log("userPw:", userPw);
+            if (userPw == "") {
+                alert('please enter pw');
+                return;
+            }
+            if (userName == "") {
+                alert('please enter name');
+                return;
+            }
+            if (userName == "") { //버튼 이 비활성화된상태(중복성 불통과상태)에서 들어온경우이므로 비정상적
+                alert('비정상적인 요청');
+            }
+
+            const data = {
+                userId: userId,
+                userPw: userPw,
+                userName: userName
+            };
+
+
+            $.ajax({
+                url: "/registerCheck",
+                type: "POST",
+                contentType: "application/json",
+                data: JSON.stringify(data),
+                success: function (response) {
+
+
+
+                    if (response == 1) {
+                        console.log("ok")
+                        alert("회원가입 이 정상적으로 완료되었습니다.")
+                        window.location.href = "/loginMenu"
+                    } else { /// 회원가입이된 후 다른페이지로 이동되지않고 그 내용 그대로 양식 재 제출될시
+
+                        console.log("not ok")
+                        alert('비정상적인 요청');
+                        window.location.href = "/registerMenu"
+                    }
+
+                },
+
+            });
+        }
+    </script>
+
+
+
+    <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.7.1/jquery.min.js"></script>
+</body>
+
+</html>
