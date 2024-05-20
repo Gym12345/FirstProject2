@@ -103,7 +103,7 @@ function loginCheck() {
         contentType: "application/json",
         success: function (response) {
             if (response == 1) {
-                window.location.href = "/normalUser/afterLogin"; // Ensure this matches your secured URL
+                window.location.href = "/normalUser/afterLogin";
             } else {
                 alert("회원정보가없습니다");
             }

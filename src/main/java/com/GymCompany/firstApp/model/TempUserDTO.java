@@ -1,5 +1,6 @@
 package com.GymCompany.firstApp.model;
 
+
 public class TempUserDTO {   //(인풋 필드에서 받은정보를 잠깐담아놓는용도)  
 	private String userId;
 	private String userPw;

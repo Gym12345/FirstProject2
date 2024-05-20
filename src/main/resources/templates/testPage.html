@@ -1,267 +1,433 @@
-<!doctype html>
-<html lang="en">
+<!DOCTYPE html>
+<html lang="en" >
 <head>
-  <title>Auth page</title>
-  <meta charset="utf-8">
-  <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
-  <link rel="stylesheet" href="https://unicons.iconscout.com/release/v2.1.9/css/unicons.css">
-  <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/twitter-bootstrap/4.5.0/css/bootstrap.min.css">
-<link rel="stylesheet" href="/css/styles.css">
+  <meta charset="UTF-8">
+  <title>Javascript Stack Game</title>
+  <meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover"><link rel="stylesheet" href="./style.css">
+<link rel="stylesheet" href="./css/styles.css">
 <style>
-@import url('https://fonts.googleapis.com/css?family=Poppins:400,500,600,700,800,900');
-body{
-	font-family: 'Poppins', sans-serif;
-	font-weight: 300;
-	line-height: 1.7;
-	color: #ffeba7;
-	background-color: #1f2029;
-}
-a:hover {
-	text-decoration: none;
-}
-.link {
-  color: #ffeba7;
-}
-.link:hover {
-  color: #c4c3ca;
-}
-p {
-  font-weight: 500;
-  font-size: 14px;
-}
-h4 {
-  font-weight: 600;
-}
-h6 span{
-  padding: 0 20px;
-  font-weight: 700;
-}
-.section{
-  position: relative;
+@import url("https://fonts.googleapis.com/css?family=Comfortaa");
+html, body {
+  margin: 0;
+  overflow: hidden;
+  height: 100vh;
   width: 100%;
-  display: block;
-}
-.full-height{
-  min-height: 100vh;
-}
-[type="checkbox"]:checked,
-[type="checkbox"]:not(:checked){
-display: none;
-}
-.checkbox:checked + label,
-.checkbox:not(:checked) + label{
   position: relative;
-  display: block;
-  text-align: center;
-  width: 60px;
-  height: 16px;
-  border-radius: 8px;
-  padding: 0;
-  margin: 10px auto;
-  cursor: pointer;
-  background-color: #ffeba7;
+  font-family: "Comfortaa", cursive;
 }
-.checkbox:checked + label:before,
-.checkbox:not(:checked) + label:before{
-  position: absolute;
-  display: block;
-  width: 36px;
-  height: 36px;
-  border-radius: 50%;
-  color: #ffeba7;
-  background-color: #020305;
-  font-family: 'unicons';
-  content: '\eb4f';
-  z-index: 20;
-  top: -10px;
-  left: -10px;
-  line-height: 36px;
-  text-align: center;
-  font-size: 24px;
-  transition: all 0.5s ease;
-}
-.checkbox:checked + label:before {
-  transform: translateX(44px) rotate(-270deg);
-}
-.card-3d-wrap {
-  position: relative;
-  width: 440px;
-  max-width: 100%;
-  height: 400px;
-  -webkit-transform-style: preserve-3d;
-  transform-style: preserve-3d;
-  perspective: 800px;
-  margin-top: 60px;
-}
-.card-3d-wrapper {
+
+#container {
   width: 100%;
   height: 100%;
-  position:absolute;
-  -webkit-transform-style: preserve-3d;
-  transform-style: preserve-3d;
-  transition: all 600ms ease-out; 
 }
-.card-front, .card-back {
-  width: 100%;
-  height: 100%;
-  background-color: #2b2e38;
-  background-image: url('/img/pattern_japanese-pattern-2_1_2_0-0_0_1__ffffff00_000000.png');
+#container #score {
   position: absolute;
-  border-radius: 6px;
-  -webkit-transform-style: preserve-3d;
-}
-.card-back {
-  transform: rotateY(180deg);
-}
-.checkbox:checked ~ .card-3d-wrap .card-3d-wrapper {
-  transform: rotateY(180deg);
-}
-.center-wrap{
-  position: absolute;
+  top: 20px;
   width: 100%;
-  padding: 0 35px;
-  top: 50%;
-  left: 0;
-  transform: translate3d(0, -50%, 35px) perspective(100px);
-  z-index: 20;
-  display: block;
+  text-align: center;
+  font-size: 10vh;
+  transition: transform 0.5s ease;
+  color: #333344;
+  transform: translatey(-200px) scale(1);
 }
-.form-group{ 
-  position: relative;
-  display: block;
-    margin: 0;
-    padding: 0;
-}
-.form-style {
-  padding: 13px 20px;
-  padding-left: 55px;
-  height: 48px;
-  width: 100%;
-  font-weight: 500;
-  border-radius: 4px;
-  font-size: 14px;
-  line-height: 22px;
-  letter-spacing: 0.5px;
-  outline: none;
-  color: #c4c3ca;
-  background-color: #1f2029;
-  border: none;
-  -webkit-transition: all 200ms linear;
-  transition: all 200ms linear;
-  box-shadow: 0 4px 8px 0 rgba(21,21,21,.2);
-}
-.form-style:focus,
-.form-style:active {
-  border: none;
-  outline: none;
-  box-shadow: 0 4px 8px 0 rgba(21,21,21,.2);
-}
-.input-icon {
+#container #game {
   position: absolute;
   top: 0;
-  left: 18px;
-  height: 48px;
-  font-size: 24px;
-  line-height: 48px;
-  text-align: left;
-  -webkit-transition: all 200ms linear;
-   transition: all 200ms linear;
+  right: 0;
+  bottom: 0;
+  left: 0;
 }
-.btn{  
-  border-radius: 4px;
-  height: 44px;
-  font-size: 13px;
-  font-weight: 600;
-  text-transform: uppercase;
-  -webkit-transition : all 200ms linear;
-  transition: all 200ms linear;
-  padding: 0 30px;
-  letter-spacing: 1px;
-  display: -webkit-inline-flex;
-  display: -ms-inline-flexbox;
-  display: inline-flex;
+#container .game-over {
+  position: absolute;
+  top: 0;
+  left: 0;
+  width: 100%;
+  height: 85%;
+  display: flex;
+  flex-direction: column;
   align-items: center;
-  background-color: #ffeba7;
-  color: #000000;
+  justify-content: center;
 }
-.btn:hover{  
-  background-color: #000000;
-  color: #ffeba7;
-  box-shadow: 0 8px 24px 0 rgba(16,39,112,.2);
+#container .game-over * {
+  transition: opacity 0.5s ease, transform 0.5s ease;
+  opacity: 0;
+  transform: translatey(-50px);
+  color: #333344;
 }
-
- 
-
+#container .game-over h2 {
+  margin: 0;
+  padding: 0;
+  font-size: 40px;
+}
+#container .game-ready {
+  position: absolute;
+  top: 0;
+  left: 0;
+  width: 100%;
+  height: 100%;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: space-around;
+}
+#container .game-ready #start-button {
+  transition: opacity 0.5s ease, transform 0.5s ease;
+  opacity: 0;
+  transform: translatey(-50px);
+  border: 3px solid #333344;
+  padding: 10px 20px;
+  background-color: transparent;
+  color: #333344;
+  font-size: 30px;
+}
+#container #instructions {
+  position: absolute;
+  width: 100%;
+  top: 16vh;
+  left: 0;
+  text-align: center;
+  transition: opacity 0.5s ease, transform 0.5s ease;
+  opacity: 0;
+}
+#container #instructions.hide {
+  opacity: 0 !important;
+}
+#container.playing #score, #container.resetting #score {
+  transform: translatey(0px) scale(1);
+}
+#container.playing #instructions {
+  opacity: 1;
+}
+#container.ready .game-ready #start-button {
+  opacity: 1;
+  transform: translatey(0);
+}
+#container.ended #score {
+  transform: translatey(6vh) scale(1.5);
+}
+#container.ended .game-over * {
+  opacity: 1;
+  transform: translatey(0);
+}
+#container.ended .game-over p {
+  transition-delay: 0.3s;
+}
 </style>
 
-
 </head>
-
-
-
 <body>
-	<div class="section">
-		<div class="container">
-			<div class="row full-height justify-content-center">
-				<div class="col-12 text-center align-self-center py-5">
-					<div class="section pb-5 pt-5 pt-sm-2 text-center">
-						<h6 class="mb-0 pb-3"><span>Log In </span><span>Sign Up</span></h6>
-			          	<input class="checkbox" type="checkbox" id="reg-log" name="reg-log"/>
-			          	<label for="reg-log"></label>
-			          	
-			          	
-			          
-						<div class="card-3d-wrap mx-auto">
-							<div class="card-3d-wrapper">
-								<div class="card-front">
-									<div class="center-wrap">
-										<div class="section text-center">
-											<h4 class="mb-4 pb-3">Log In</h4>
-											<div class="form-group">
-												<input type="text" class="form-style" placeholder="ID">
-												<i class="input-icon uil uil-user"></i>
-											</div>	
-											<div class="form-group mt-2">
-												<input type="password" class="form-style" placeholder="Password">
-												<i class="input-icon uil uil-lock-alt"></i>
-											</div>
-											<a href="https://www.web-leb.com/code" class="btn mt-4">Login</a>
-                      <p class="mb-0 mt-4 text-center"><a href="https://www.web-leb.com/code" class="link">Forgot your password?</a></p>
-				      					</div>
-			      					</div>
-			      				</div>
-								<div class="card-back">
-									<div class="center-wrap">
-										<div class="section text-center">
-											<h4 class="mb-3 pb-3">Sign Up</h4>
-											
-											<div class="form-group">
-												<input type="text" class="form-style" placeholder="ID">
-												<i class="input-icon uil uil-user"></i>
-											</div>	
-											
-											<div class="form-group mt-2">
-												<input type="password" class="form-style" placeholder="Password">
-												<i class="input-icon uil uil-lock-alt"></i>
-											</div>
-											<br>
-											<div class="form-group">
-												<input type="text" class="form-style" placeholder="Full Name">
-												<i class="input-icon uil uil-user"></i>
-											</div>	
-									
-                   
-											
-											<a href="https://www.web-leb.com/code" class="btn mt-4">Register</a>
-				      					</div>
-			      					</div>
-			      				</div>
-			      			</div>
-			      		</div>
-			      	</div>
-		      	</div>
-	      	</div>
-	    </div>
+	<div id="container">
+		<div id="game"></div>
+		<div id="score">0</div>
+		<div id="instructions">Click (or press the spacebar) to place the block</div>
+		<div class="game-over">
+			<h2>Game Over</h2>
+			<p>You did great, you're the best.</p>
+			<p>Click or spacebar to start again</p>
+		</div>
+		<div class="game-ready">
+			<div id="start-button">Start</div>
+			<div></div>
+		</div>
 	</div>
-</body>
+  <script src="https://cdnjs.cloudflare.com/ajax/libs/three.js/r83/three.min.js"></script>
+  <script src="https://cdnjs.cloudflare.com/ajax/libs/gsap/latest/TweenMax.min.js"></script>
+ <script>
+ "use strict";
+ console.clear();
+ class Stage {
+     constructor() {
+         // container
+         this.render = function () {
+             this.renderer.render(this.scene, this.camera);
+         };
+         this.add = function (elem) {
+             this.scene.add(elem);
+         };
+         this.remove = function (elem) {
+             this.scene.remove(elem);
+         };
+         this.container = document.getElementById('game');
+         // renderer
+         this.renderer = new THREE.WebGLRenderer({
+             antialias: true,
+             alpha: false
+         });
+         this.renderer.setSize(window.innerWidth, window.innerHeight);
+         this.renderer.setClearColor('#D0CBC7', 1);
+         this.container.appendChild(this.renderer.domElement);
+         // scene
+         this.scene = new THREE.Scene();
+         // camera
+         let aspect = window.innerWidth / window.innerHeight;
+         let d = 20;
+         this.camera = new THREE.OrthographicCamera(-d * aspect, d * aspect, d, -d, -100, 1000);
+         this.camera.position.x = 2;
+         this.camera.position.y = 2;
+         this.camera.position.z = 2;
+         this.camera.lookAt(new THREE.Vector3(0, 0, 0));
+         //light
+         this.light = new THREE.DirectionalLight(0xffffff, 0.5);
+         this.light.position.set(0, 499, 0);
+         this.scene.add(this.light);
+         this.softLight = new THREE.AmbientLight(0xffffff, 0.4);
+         this.scene.add(this.softLight);
+         window.addEventListener('resize', () => this.onResize());
+         this.onResize();
+     }
+     setCamera(y, speed = 0.3) {
+         TweenLite.to(this.camera.position, speed, { y: y + 4, ease: Power1.easeInOut });
+         TweenLite.to(this.camera.lookAt, speed, { y: y, ease: Power1.easeInOut });
+     }
+     onResize() {
+         let viewSize = 30;
+         this.renderer.setSize(window.innerWidth, window.innerHeight);
+         this.camera.left = window.innerWidth / -viewSize;
+         this.camera.right = window.innerWidth / viewSize;
+         this.camera.top = window.innerHeight / viewSize;
+         this.camera.bottom = window.innerHeight / -viewSize;
+         this.camera.updateProjectionMatrix();
+     }
+ }
+ class Block {
+     constructor(block) {
+         // set size and position
+         this.STATES = { ACTIVE: 'active', STOPPED: 'stopped', MISSED: 'missed' };
+         this.MOVE_AMOUNT = 12;
+         this.dimension = { width: 0, height: 0, depth: 0 };
+         this.position = { x: 0, y: 0, z: 0 };
+         this.targetBlock = block;
+         this.index = (this.targetBlock ? this.targetBlock.index : 0) + 1;
+         this.workingPlane = this.index % 2 ? 'x' : 'z';
+         this.workingDimension = this.index % 2 ? 'width' : 'depth';
+         // set the dimensions from the target block, or defaults.
+         this.dimension.width = this.targetBlock ? this.targetBlock.dimension.width : 10;
+         this.dimension.height = this.targetBlock ? this.targetBlock.dimension.height : 2;
+         this.dimension.depth = this.targetBlock ? this.targetBlock.dimension.depth : 10;
+         this.position.x = this.targetBlock ? this.targetBlock.position.x : 0;
+         this.position.y = this.dimension.height * this.index;
+         this.position.z = this.targetBlock ? this.targetBlock.position.z : 0;
+         this.colorOffset = this.targetBlock ? this.targetBlock.colorOffset : Math.round(Math.random() * 100);
+         // set color
+         if (!this.targetBlock) {
+             this.color = 0x333344;
+         }
+         else {
+             let offset = this.index + this.colorOffset;
+             var r = Math.sin(0.3 * offset) * 55 + 200;
+             var g = Math.sin(0.3 * offset + 2) * 55 + 200;
+             var b = Math.sin(0.3 * offset + 4) * 55 + 200;
+             this.color = new THREE.Color(r / 255, g / 255, b / 255);
+         }
+         // state
+         this.state = this.index > 1 ? this.STATES.ACTIVE : this.STATES.STOPPED;
+         // set direction
+         this.speed = -0.1 - (this.index * 0.005);
+         if (this.speed < -4)
+             this.speed = -4;
+         this.direction = this.speed;
+         // create block
+         let geometry = new THREE.BoxGeometry(this.dimension.width, this.dimension.height, this.dimension.depth);
+         geometry.applyMatrix(new THREE.Matrix4().makeTranslation(this.dimension.width / 2, this.dimension.height / 2, this.dimension.depth / 2));
+         this.material = new THREE.MeshToonMaterial({ color: this.color, shading: THREE.FlatShading });
+         this.mesh = new THREE.Mesh(geometry, this.material);
+         this.mesh.position.set(this.position.x, this.position.y + (this.state == this.STATES.ACTIVE ? 0 : 0), this.position.z);
+         if (this.state == this.STATES.ACTIVE) {
+             this.position[this.workingPlane] = Math.random() > 0.5 ? -this.MOVE_AMOUNT : this.MOVE_AMOUNT;
+         }
+     }
+     reverseDirection() {
+         this.direction = this.direction > 0 ? this.speed : Math.abs(this.speed);
+     }
+     place() {
+         this.state = this.STATES.STOPPED;
+         let overlap = this.targetBlock.dimension[this.workingDimension] - Math.abs(this.position[this.workingPlane] - this.targetBlock.position[this.workingPlane]);
+         let blocksToReturn = {
+             plane: this.workingPlane,
+             direction: this.direction
+         };
+         if (this.dimension[this.workingDimension] - overlap < 0.3) {
+             overlap = this.dimension[this.workingDimension];
+             blocksToReturn.bonus = true;
+             this.position.x = this.targetBlock.position.x;
+             this.position.z = this.targetBlock.position.z;
+             this.dimension.width = this.targetBlock.dimension.width;
+             this.dimension.depth = this.targetBlock.dimension.depth;
+         }
+         if (overlap > 0) {
+             let choppedDimensions = { width: this.dimension.width, height: this.dimension.height, depth: this.dimension.depth };
+             choppedDimensions[this.workingDimension] -= overlap;
+             this.dimension[this.workingDimension] = overlap;
+             let placedGeometry = new THREE.BoxGeometry(this.dimension.width, this.dimension.height, this.dimension.depth);
+             placedGeometry.applyMatrix(new THREE.Matrix4().makeTranslation(this.dimension.width / 2, this.dimension.height / 2, this.dimension.depth / 2));
+             let placedMesh = new THREE.Mesh(placedGeometry, this.material);
+             let choppedGeometry = new THREE.BoxGeometry(choppedDimensions.width, choppedDimensions.height, choppedDimensions.depth);
+             choppedGeometry.applyMatrix(new THREE.Matrix4().makeTranslation(choppedDimensions.width / 2, choppedDimensions.height / 2, choppedDimensions.depth / 2));
+             let choppedMesh = new THREE.Mesh(choppedGeometry, this.material);
+             let choppedPosition = {
+                 x: this.position.x,
+                 y: this.position.y,
+                 z: this.position.z
+             };
+             if (this.position[this.workingPlane] < this.targetBlock.position[this.workingPlane]) {
+                 this.position[this.workingPlane] = this.targetBlock.position[this.workingPlane];
+             }
+             else {
+                 choppedPosition[this.workingPlane] += overlap;
+             }
+             placedMesh.position.set(this.position.x, this.position.y, this.position.z);
+             choppedMesh.position.set(choppedPosition.x, choppedPosition.y, choppedPosition.z);
+             blocksToReturn.placed = placedMesh;
+             if (!blocksToReturn.bonus)
+                 blocksToReturn.chopped = choppedMesh;
+         }
+         else {
+             this.state = this.STATES.MISSED;
+         }
+         this.dimension[this.workingDimension] = overlap;
+         return blocksToReturn;
+     }
+     tick() {
+         if (this.state == this.STATES.ACTIVE) {
+             let value = this.position[this.workingPlane];
+             if (value > this.MOVE_AMOUNT || value < -this.MOVE_AMOUNT)
+                 this.reverseDirection();
+             this.position[this.workingPlane] += this.direction;
+             this.mesh.position[this.workingPlane] = this.position[this.workingPlane];
+         }
+     }
+ }
+ class Game {
+     constructor() {
+         this.STATES = {
+             'LOADING': 'loading',
+             'PLAYING': 'playing',
+             'READY': 'ready',
+             'ENDED': 'ended',
+             'RESETTING': 'resetting'
+         };
+         this.blocks = [];
+         this.state = this.STATES.LOADING;
+         this.stage = new Stage();
+         this.mainContainer = document.getElementById('container');
+         this.scoreContainer = document.getElementById('score');
+         this.startButton = document.getElementById('start-button');
+         this.instructions = document.getElementById('instructions');
+         this.scoreContainer.innerHTML = '0';
+         this.newBlocks = new THREE.Group();
+         this.placedBlocks = new THREE.Group();
+         this.choppedBlocks = new THREE.Group();
+         this.stage.add(this.newBlocks);
+         this.stage.add(this.placedBlocks);
+         this.stage.add(this.choppedBlocks);
+         this.addBlock();
+         this.tick();
+         this.updateState(this.STATES.READY);
+         document.addEventListener('keydown', e => {
+             if (e.keyCode == 32)
+                 this.onAction();
+         });
+         document.addEventListener('click', e => {
+             this.onAction();
+         });
+         document.addEventListener('touchstart', e => {
+             e.preventDefault();
+         });
+     }
+     updateState(newState) {
+         for (let key in this.STATES)
+             this.mainContainer.classList.remove(this.STATES[key]);
+         this.mainContainer.classList.add(newState);
+         this.state = newState;
+     }
+     onAction() {
+         switch (this.state) {
+             case this.STATES.READY:
+                 this.startGame();
+                 break;
+             case this.STATES.PLAYING:
+                 this.placeBlock();
+                 break;
+             case this.STATES.ENDED:
+                 this.restartGame();
+                 break;
+         }
+     }
+     startGame() {
+         if (this.state != this.STATES.PLAYING) {
+             this.scoreContainer.innerHTML = '0';
+             this.updateState(this.STATES.PLAYING);
+             this.addBlock();
+         }
+     }
+     restartGame() {
+         this.updateState(this.STATES.RESETTING);
+         let oldBlocks = this.placedBlocks.children;
+         let removeSpeed = 0.2;
+         let delayAmount = 0.02;
+         for (let i = 0; i < oldBlocks.length; i++) {
+             TweenLite.to(oldBlocks[i].scale, removeSpeed, { x: 0, y: 0, z: 0, delay: (oldBlocks.length - i) * delayAmount, ease: Power1.easeIn, onComplete: () => this.placedBlocks.remove(oldBlocks[i]) });
+             TweenLite.to(oldBlocks[i].rotation, removeSpeed, { y: 0.5, delay: (oldBlocks.length - i) * delayAmount, ease: Power1.easeIn });
+         }
+         let cameraMoveSpeed = removeSpeed * 2 + (oldBlocks.length * delayAmount);
+         this.stage.setCamera(2, cameraMoveSpeed);
+         let countdown = { value: this.blocks.length - 1 };
+         TweenLite.to(countdown, cameraMoveSpeed, { value: 0, onUpdate: () => { this.scoreContainer.innerHTML = String(Math.round(countdown.value)); } });
+         this.blocks = this.blocks.slice(0, 1);
+         setTimeout(() => {
+             this.startGame();
+         }, cameraMoveSpeed * 1000);
+     }
+     placeBlock() {
+         let currentBlock = this.blocks[this.blocks.length - 1];
+         let newBlocks = currentBlock.place();
+         this.newBlocks.remove(currentBlock.mesh);
+         if (newBlocks.placed)
+             this.placedBlocks.add(newBlocks.placed);
+         if (newBlocks.chopped) {
+             this.choppedBlocks.add(newBlocks.chopped);
+             let positionParams = { y: '-=30', ease: Power1.easeIn, onComplete: () => this.choppedBlocks.remove(newBlocks.chopped) };
+             let rotateRandomness = 10;
+             let rotationParams = {
+                 delay: 0.05,
+                 x: newBlocks.plane == 'z' ? ((Math.random() * rotateRandomness) - (rotateRandomness / 2)) : 0.1,
+                 z: newBlocks.plane == 'x' ? ((Math.random() * rotateRandomness) - (rotateRandomness / 2)) : 0.1,
+                 y: Math.random() * 0.1,
+             };
+             if (newBlocks.chopped.position[newBlocks.plane] > newBlocks.placed.position[newBlocks.plane]) {
+                 positionParams[newBlocks.plane] = '+=' + (40 * Math.abs(newBlocks.direction));
+             }
+             else {
+                 positionParams[newBlocks.plane] = '-=' + (40 * Math.abs(newBlocks.direction));
+             }
+             TweenLite.to(newBlocks.chopped.position, 1, positionParams);
+             TweenLite.to(newBlocks.chopped.rotation, 1, rotationParams);
+         }
+         this.addBlock();
+     }
+     addBlock() {
+         let lastBlock = this.blocks[this.blocks.length - 1];
+         if (lastBlock && lastBlock.state == lastBlock.STATES.MISSED) {
+             return this.endGame();
+         }
+         this.scoreContainer.innerHTML = String(this.blocks.length - 1);
+         let newKidOnTheBlock = new Block(lastBlock);
+         this.newBlocks.add(newKidOnTheBlock.mesh);
+         this.blocks.push(newKidOnTheBlock);
+         this.stage.setCamera(this.blocks.length * 2);
+         if (this.blocks.length >= 5)
+             this.instructions.classList.add('hide');
+     }
+     endGame() {
+         this.updateState(this.STATES.ENDED);
+     }
+     tick() {
+         this.blocks[this.blocks.length - 1].tick();
+         this.stage.render();
+         requestAnimationFrame(() => { this.tick(); });
+     }
+ }
+ let game = new Game();
+</script>
+  </body>
 </html>
