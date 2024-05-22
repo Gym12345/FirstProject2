@@ -5,15 +5,20 @@ import java.util.Collections;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.security.authentication.UsernamePasswordAuthenticationToken;
 import org.springframework.security.core.authority.SimpleGrantedAuthority;
+import org.springframework.security.core.context.SecurityContext;
 import org.springframework.security.core.context.SecurityContextHolder;
 import org.springframework.security.crypto.bcrypt.BCryptPasswordEncoder;
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestBody;
+import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.RestController;
 
 import com.GymCompany.firstApp.model.TempUserDTO;
 import com.GymCompany.firstApp.model.UserListDTO;
 import com.GymCompany.firstApp.service.UserListService;
+
+import jakarta.servlet.http.HttpServletRequest;
+import jakarta.servlet.http.HttpServletResponse;
 
 @RestController
 public class AJAXController {
@@ -56,36 +61,7 @@ public class AJAXController {
         }
     }
 
-    @PostMapping("/loginCheck")
-    public int loginCheck(@RequestBody TempUserDTO tempUserDTO) {
-        String userId = tempUserDTO.getUserId();
-        String userPw = tempUserDTO.getUserPw();
-
-        String hashedPw = userListService.getPasswordByUserId(userId);
-        
-        if (hashedPw != null && new BCryptPasswordEncoder().matches(userPw, hashedPw)) {
-        	UserListDTO user = userListService.loadUserByUsername(userId);
-        	System.out.println("UserListDTO:"+user);
-        	
-            // Create authentication token
-            UsernamePasswordAuthenticationToken authenticationToken = new UsernamePasswordAuthenticationToken(
-                user.getUserId(), null, Collections.singletonList(new SimpleGrantedAuthority(user.getAuth()))
-            );// Principal=Gym1, Credentials=[PROTECTED], Authenticated=true, Details=null, Granted Authorities=[normalUser]
-            
-           
-            SecurityContextHolder.getContext().setAuthentication(authenticationToken);
-        	
-            System.out.println("Authentication Token: " + SecurityContextHolder.getContext().getAuthentication());// 성공토큰생성완료 but still not refering to it
-            
-            
-        	System.out.println(" login success");
-            return 1; // Login successful
-        }
-        
-       
-        System.out.println("login failed");
-        return 0; // Login failed
-    }
+   
     
     
     
