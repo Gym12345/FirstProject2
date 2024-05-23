@@ -29,7 +29,7 @@ public class UserListService implements UserDetailsService {
     public int save(UserListDTO userDTO) { //register
         BCryptPasswordEncoder passwordEncoder = new BCryptPasswordEncoder();
         String encodedPassword = passwordEncoder.encode(userDTO.getUserPw());
-
+       
         UserListDTO user = new UserListDTO.Builder()  //빌더 패턴 , UserListDTO 에 정의되어있음
                 .userId(userDTO.getUserId())
                 .userPw(encodedPassword)

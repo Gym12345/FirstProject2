@@ -6,24 +6,19 @@ package com.GymCompany.firstApp.controllers;
 import java.util.Collections;
 
 import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.security.authentication.AuthenticationManager;
 import org.springframework.security.authentication.UsernamePasswordAuthenticationToken;
-import org.springframework.security.core.Authentication;
-import org.springframework.security.core.AuthenticationException;
+
 import org.springframework.security.core.authority.SimpleGrantedAuthority;
 import org.springframework.security.core.context.SecurityContext;
 import org.springframework.security.core.context.SecurityContextHolder;
 import org.springframework.security.crypto.bcrypt.BCryptPasswordEncoder;
 import org.springframework.security.web.context.HttpSessionSecurityContextRepository;
-import org.springframework.security.web.context.SecurityContextRepository;
 import org.springframework.stereotype.Controller;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PostMapping;
-import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestParam;
-import org.springframework.web.servlet.ModelAndView;
 
-import com.GymCompany.firstApp.model.TempUserDTO;
+
 import com.GymCompany.firstApp.model.UserListDTO;
 import com.GymCompany.firstApp.service.UserListService;
 
@@ -76,43 +71,13 @@ public class HomeController {
 
 		return "testPage";
 	}
+	@GetMapping(value = "/ds")
+	public String ds(HttpServletRequest request) {
+		System.out.println("test ds");
+
+		return "ds";
+	}
 	
-	
-//	 @PostMapping(value ="/loginCheck")
-//	    public String loginCheck(HttpServletRequest request, HttpServletResponse response,@RequestParam("userId") String userId, @RequestParam("password") String password) {
-//	        String hashedPw = userListService.getPasswordByUserId(userId);
-//	        	System.out.println("hashedPw:"+hashedPw);
-//	        	
-//	        if (hashedPw != null && new BCryptPasswordEncoder().matches(password, hashedPw)) {
-//	            UserListDTO user = userListService.loadUserByUsername(userId);
-//	            System.out.println("UserListDTO:" + user);
-//	            
-//	            // Create authentication token
-//	            UsernamePasswordAuthenticationToken authenticationToken = new UsernamePasswordAuthenticationToken(
-//	                user.getUserId(), null, Collections.singletonList(new SimpleGrantedAuthority(user.getAuth()))
-//	            );
-//	            
-//	            
-//	            SecurityContext context = SecurityContextHolder.createEmptyContext();
-//	            context.setAuthentication(authenticationToken);
-//	            SecurityContextHolder.setContext(context);
-//	            
-//	            System.out.println("Authentication Token: " + SecurityContextHolder.getContext());
-//	           
-//	            
-//	            
-//	            
-//	      
-//	            
-//	           
-//	            
-//	            return "redirect:/normalUser/afterLogin";  // Assuming you have a controller mapping for this URL
-//	        }   // 요청 처냄 에러 
-//	        
-//	        System.out.println("Login failed");
-//	        return "redirect:/loginMenu?error";  // Redirect back to the login page with an error message
-//	    }
-//		
 	@PostMapping(value ="/loginCheck")
 	public String loginCheck(HttpServletRequest request, HttpServletResponse response, @RequestParam("userId") String userId, @RequestParam("password") String password) {
 	    String hashedPw = userListService.getPasswordByUserId(userId);
@@ -144,11 +109,11 @@ public class HomeController {
 	    return "redirect:/loginMenu?error";
 	}
 
-	@GetMapping(value = "/invalidateSession")
+	@GetMapping(value = "/invalidateSession")  // temporarily using this , delete this later
 	public String invalidateSession(HttpServletRequest request) {
 		HttpSession session = request.getSession(true);
 		session.invalidate();
-		return "/";
+		return "redirect:/";
 	}
 	
 	 
