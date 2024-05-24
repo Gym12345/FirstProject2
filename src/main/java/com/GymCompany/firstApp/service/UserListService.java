@@ -61,7 +61,7 @@ public class UserListService implements UserDetailsService {
     }
 
     @Transactional(readOnly = true)
-    public UserListDTO loadUserByUsername(String userId) throws UsernameNotFoundException {
+    public UserListDTO loadUserByUsername(String userId) throws UsernameNotFoundException {//original return type is UserDetails
         UserListDTO user = userListRepository.findByUserId(userId);
         System.out.println("user:"+user.getUserId());
        

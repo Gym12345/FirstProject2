@@ -28,7 +28,12 @@ import jakarta.persistence.Table;
 @Table(name = "USERLIST")
 public class UserListDTO implements UserDetails {
 
-    @Id
+    /**
+	 * 
+	 */
+	private static final long serialVersionUID = 1L;
+
+	@Id
     @GeneratedValue(strategy = GenerationType.SEQUENCE, generator = "userListSeqGen")
     @SequenceGenerator(name = "userListSeqGen", sequenceName = "user_list_seq", allocationSize = 1)
     @Column(name = "ULID")
@@ -135,11 +140,11 @@ public class UserListDTO implements UserDetails {
 		return "UserListDTO [ulid=" + ulid + ", userId=" + userId + ", userPw=" + userPw + ", userName=" + userName
 				+ ", joinDate=" + joinDate + ", lastLoginTime=" + lastLoginTime + ", auth=" + auth + "]";
 	}
-
+//UserDetails
 	@Override
     public Collection<? extends GrantedAuthority> getAuthorities() {
         Set<GrantedAuthority> roles = new HashSet<>();
-        for (String role : auth.split(",")) {
+        for (String role : auth.split(",")) {     //refer to auth here 
             roles.add(new SimpleGrantedAuthority(role));
         }
         return roles;
@@ -174,7 +179,8 @@ public class UserListDTO implements UserDetails {
     public boolean isEnabled() {
         return true;
     }
-
+//UserDetails ends
+    
     // Builder pattern implementation
     public static class Builder {
         private int ulid;

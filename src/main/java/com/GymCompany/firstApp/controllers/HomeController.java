@@ -6,8 +6,10 @@ package com.GymCompany.firstApp.controllers;
 import java.util.Collections;
 
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.context.annotation.ComponentScan;
+import org.springframework.security.authentication.AuthenticationManager;
 import org.springframework.security.authentication.UsernamePasswordAuthenticationToken;
-
+import org.springframework.security.core.Authentication;
 import org.springframework.security.core.authority.SimpleGrantedAuthority;
 import org.springframework.security.core.context.SecurityContext;
 import org.springframework.security.core.context.SecurityContextHolder;
@@ -33,12 +35,11 @@ public class HomeController {
 	
 	@Autowired
 	private UserListService userListService;
-	    
-	public HomeController(UserListService userListService) {
-	super();
-	this.userListService = userListService;
-	}
 	
+
+	
+	
+
 
 	@GetMapping(value = "/")
 	public String goHome(HttpServletRequest request) {
@@ -71,12 +72,7 @@ public class HomeController {
 
 		return "testPage";
 	}
-	@GetMapping(value = "/ds")
-	public String ds(HttpServletRequest request) {
-		System.out.println("test ds");
-
-		return "ds";
-	}
+	
 	
 	@PostMapping(value ="/loginCheck")
 	public String loginCheck(HttpServletRequest request, HttpServletResponse response, @RequestParam("userId") String userId, @RequestParam("password") String password) {
@@ -86,11 +82,13 @@ public class HomeController {
 	    if (hashedPw != null && new BCryptPasswordEncoder().matches(password, hashedPw)) {
 	        UserListDTO user = userListService.loadUserByUsername(userId);
 	        System.out.println("UserListDTO:" + user);
-
+	        
+	        System.out.println("1. user.getAuthorities():" +user.getAuthorities());
+	       
 	        // Create authentication token
 	        UsernamePasswordAuthenticationToken authenticationToken = new UsernamePasswordAuthenticationToken(
 	            user.getUserId(), null, Collections.singletonList(new SimpleGrantedAuthority(user.getAuth()))
-	        );
+	        ); // this is not jwt
 
 	        SecurityContext context = SecurityContextHolder.createEmptyContext();
 	        context.setAuthentication(authenticationToken);
@@ -100,7 +98,7 @@ public class HomeController {
 	        HttpSession session = request.getSession(true);
 	        session.setAttribute(HttpSessionSecurityContextRepository.SPRING_SECURITY_CONTEXT_KEY, context);
 
-	        System.out.println("Authentication Token: " + SecurityContextHolder.getContext());
+	        System.out.println("Authentication Token: " + SecurityContextHolder.getContext().getAuthentication());
 	        
 	        return "redirect:/normalUser/afterLogin";
 	    }
@@ -109,13 +107,20 @@ public class HomeController {
 	    return "redirect:/loginMenu?error";
 	}
 
-	@GetMapping(value = "/invalidateSession")  // temporarily using this , delete this later
-	public String invalidateSession(HttpServletRequest request) {
-		HttpSession session = request.getSession(true);
-		session.invalidate();
-		return "redirect:/";
-	}
 	
+	
+    
+
+
+// 	       
+// 	        UsernamePasswordAuthenticationToken authenticationToken = new UsernamePasswordAuthenticationToken(
+// 	            user.getUserId(), null, Collections.singletonList(new SimpleGrantedAuthority(user.getAuth()))
+// 	        ); // this is not jwt
+//   
+// 	       Authentication authentication = authenticationManager.authenticate(authenticationToken);
+// 	      SecurityContextHolder.getContext().setAuthentication(authentication);
+//
+
 	 
 
 	

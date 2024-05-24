@@ -5,6 +5,7 @@ import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.RequestMapping;
 
 import jakarta.servlet.http.HttpServletRequest;
+import jakarta.servlet.http.HttpSession;
 
 @Controller
 @RequestMapping("/normalUser")
@@ -15,5 +16,10 @@ public class UserController {
 		
 		return "afterLoginPage";
 	}
-	
+	@GetMapping(value = "/invalidateSession")  // temporarily using this , delete this later
+	public String invalidateSession(HttpServletRequest request) {
+		HttpSession session = request.getSession(true);
+		session.invalidate();
+		return "redirect:/";
+	}
 }
